@@ -48,7 +48,7 @@ function getLiri(n) {
                 })
             }
             else {
-                //default and play something else.
+                console.log("Song not found!")
             }
 
         },
