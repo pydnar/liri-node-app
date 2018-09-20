@@ -37,7 +37,8 @@ function getLiri(n,name) {
         'spotify-this-song': function () {
             //do something with url and utilize var name
             if (name) {
-                spotify.search({ type: 'track', query: name }, function (err, data) {
+                term = encodeURIComponent(name.trim());
+                spotify.search({ type: 'track', query: term }, function (err, data) {
                     if (err) {
                         return console.log('Error occurred: ' + err);
                     }
@@ -56,7 +57,8 @@ function getLiri(n,name) {
         },
         'movie-this': function () {
             if (name) {
-                var qurl = "http://omdbapi.com/?apikey=a2dd86fb" + "&t=" + name;
+                term = encodeURIComponent(name.trim());
+                var qurl = "http://omdbapi.com/?apikey=a2dd86fb" + "&t=" + term;
                 request(qurl, function (error, response, body) {
                     var data = JSON.parse(body);
                     console.log("==========Results==========" + "\n")
@@ -78,9 +80,7 @@ function getLiri(n,name) {
 
                 var dataSplit = data.split(",");
                 var arg = dataSplit[0];
-                console.log(arg)
                 var name = dataSplit[1];
-                console.log(name)
 
                 //make the right call to the appropriate function
                 switch (arg) {
@@ -89,11 +89,11 @@ function getLiri(n,name) {
                         break;
 
                     case "spotify-this-song":
-                        getLiri(arg);
+                        getLiri(arg,name);
                         break;
 
                     case "movie-this":
-                        getLiri(arg);
+                        getLiri(arg,name);
                         break;
 
                 }
