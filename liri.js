@@ -9,14 +9,16 @@ var spotify = new Spotify(keys.spotify);
 var request = require("request");
 var moment = require("moment");
 
-function getLiri(n) {
+function getLiri(n,name) {
     var fn;
     var func = {
         'concert-this': function () {
             //do something with url and utilize var name.
             //"https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
             //use moment.js to format date for event date.
-            var qurl = "https://rest.bandsintown.com/artists/" + name + "/events?app_id=codingbootcamp";
+            term = encodeURIComponent(name.trim());
+            var qurl = "https://rest.bandsintown.com/artists/" + term + "/events?app_id=codingbootcamp";
+            console.log(qurl);
             request(qurl, function (error, response, body) {
                 if (!error && response.statusCode === 200) {
                     //console.log(body)
@@ -48,7 +50,7 @@ function getLiri(n) {
                 })
             }
             else {
-                console.log("Song not found!")
+                console.log()
             }
 
         },
@@ -109,6 +111,6 @@ function getLiri(n) {
 
 //arguments
 var arg = process.argv[2];
-var name = process.argv.slice(3).join(" ");
+var name = process.argv[3];
 
-getLiri(arg);
+getLiri(arg,name);
